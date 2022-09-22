@@ -23,7 +23,7 @@ int main() {
 	manager.setOperators(dzielenie);
 
 	MyInterpreter operatorInterpreter;
-	std::cout << operatorInterpreter.interpret("5 ^ 0", manager);
+	std::cout << operatorInterpreter.interpret("5 * a", manager);
 
 	return 0;
 }

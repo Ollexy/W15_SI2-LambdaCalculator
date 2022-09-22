@@ -3,8 +3,8 @@
 
 double MyInterpreter::interpret(const std::string& in, OperatorManager& om)
 {
-    InterpreterException error("asdas", "asdasd");
-
+    InterpreterException invalidOperator("Invalid Operator", "Operator not found ");
+    InterpreterException invalidArgument("Invalid Argument", "Argument is not valid");
     int position{};
     double num1{}, num2{};
     
@@ -29,23 +29,31 @@ double MyInterpreter::interpret(const std::string& in, OperatorManager& om)
             position = std::stoi(om.findOperator(operatorSign));
         }
         else {
-            error.expression = operatorSign;
-            throw error;
+            invalidOperator.expression = operatorSign;
+            throw invalidOperator;
         }
     }
-    catch (InterpreterException& error2) {
-        error2.what();
+    catch (InterpreterException&) {
+        std::cout<< invalidOperator.what();
     }
 
     ss >> num2String;
     try {
+        for (auto a : num2String) {
+            if (!std::isdigit(a)) {
+                invalidArgument.expression = num2String;
+                throw invalidArgument;
+            }
+        }
+
         num2 = std::stod(num2String);
     }
-    catch (const std::exception&) {
-
+    catch (InterpreterException&) {
+        std::cout<< invalidArgument.what();
     }
+
     double result{};
-    ss >> operatorSign;
+    
     try {
        result = om.getOperators().at(position)(num1, num2);
     }
