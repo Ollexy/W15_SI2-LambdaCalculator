@@ -9,7 +9,7 @@ int main() {
 	auto lambdaDodawanie = [](double x, double y) {return x + y; };
 	auto lambdaOdejmowanie = [](double x, double y) {return x - y; };
 	auto lambdaMnozenie = [](double x, double y) {return x * y; };
-	auto lambdaDzielenie = [](double x, double y) {if (y == 0) throw "Error"; return x / y; };
+	auto lambdaDzielenie = [](double x, double y) {if (y == 0) throw std::logic_error("Dont divide by "); return x / y; };
 
 	ArithmeticOperator dodawanie(lambdaDodawanie, "dodawanie", "+", 2);
 	ArithmeticOperator odejmowanie(lambdaOdejmowanie, "odejmowanie", "-", 2);
@@ -23,7 +23,7 @@ int main() {
 	manager.setOperators(dzielenie);
 
 	MyInterpreter operatorInterpreter;
-	std::cout << operatorInterpreter.interpret("5 - 2", manager);
+	std::cout << operatorInterpreter.interpret("5 ^ 0", manager);
 
 	return 0;
 }

@@ -5,12 +5,18 @@
 class InterpreterException
 	: public std::exception
 {
-	std::string name;
-	std::string errorMessage;
 
 
 public:
+	std::string name;
+	std::string errorMessage;
+	std::string expression;
+
 	InterpreterException() = default;
-	//const char* what() noexcept;
+	InterpreterException(std::string name, std::string errorMessage)
+		:name(name),
+		errorMessage(errorMessage){}
+
+	const char* what() noexcept;
 };
 

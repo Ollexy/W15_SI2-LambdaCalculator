@@ -12,7 +12,7 @@ std::vector<ArithmeticOperator>& OperatorManager::getOperators()
 
 std::string OperatorManager::findOperator(std::string symbol) const
 {
-    for (size_t i{ 0 }; i <= operators.size();) {
+    for (size_t i{ 0 }; i <= operators.size();i++) {
         if (operators[i].getOperatorSymbol() == symbol) {
             return std::to_string(i);
         }

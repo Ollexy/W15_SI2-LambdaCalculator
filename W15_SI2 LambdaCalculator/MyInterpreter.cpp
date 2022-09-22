@@ -1,7 +1,10 @@
 #include "MyInterpreter.h"
 
+
 double MyInterpreter::interpret(const std::string& in, OperatorManager& om)
 {
+    InterpreterException error("asdas", "asdasd");
+
     int position{};
     double num1{}, num2{};
     
@@ -19,15 +22,19 @@ double MyInterpreter::interpret(const std::string& in, OperatorManager& om)
 
     ss >> operatorSign;
     try {
-        if (std::stoi(om.findOperator(operatorSign))) {
+       auto index = std::find_if(om.getOperators().begin(), om.getOperators().end(), [operatorSign](auto a) mutable {
+            return a.getOperatorSymbol() == operatorSign; });
+
+        if (index != om.getOperators().end()) {
             position = std::stoi(om.findOperator(operatorSign));
         }
         else {
-            throw "There is no such operator";
+            error.expression = operatorSign;
+            throw error;
         }
     }
-    catch (const std::exception&) {
-
+    catch (InterpreterException& error2) {
+        error2.what();
     }
 
     ss >> num2String;
@@ -37,7 +44,14 @@ double MyInterpreter::interpret(const std::string& in, OperatorManager& om)
     catch (const std::exception&) {
 
     }
+    double result{};
+    ss >> operatorSign;
+    try {
+       result = om.getOperators().at(position)(num1, num2);
+    }
+    catch (const std::exception& message) {
+        std::cout << message.what();
+    }
 
-
-    return om.getOperators().at(position)(num1, num2);
+    return result;
 }
