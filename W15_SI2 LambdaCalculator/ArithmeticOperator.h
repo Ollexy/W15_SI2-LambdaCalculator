@@ -11,6 +11,7 @@ class ArithmeticOperator
 
 
 public:
+	ArithmeticOperator() = default;
 	ArithmeticOperator(std::function<double(double, double)> oper, std::string operatorName, std::string operatorSign, unsigned int operatorPrior)
 		:oper(oper),
 		operatorName(operatorName),
